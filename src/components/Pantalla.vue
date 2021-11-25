@@ -47,7 +47,7 @@ export default {
 </script>
 
 <template>
-    <div class="pantalla" @mouseover="agregarTexto(auxiliar)">
+    <div class="pantalla">
         <span style="font-size: 15px">{{acumulado}}</span><br>
         <span style="font-size: 30px">{{operando}}</span>
     </div>
