@@ -5,7 +5,6 @@ export default {
             operando: '0',
             operador: null,
             acumulado: '',
-            auxiliar: '2'
         }
     },
 
@@ -17,6 +16,9 @@ export default {
                         this.operando = cadena
                     } else {
                         this.operando += cadena
+                    }
+                    if (this.operador != null){
+                        this.operador = null
                     }
                 } else {
                     if (cadena == '+' || cadena == '/' || cadena == '-' || cadena == '*'){
@@ -59,8 +61,10 @@ export default {
     text-align: right;
     border: 2px solid black;
     border-radius: 8px;
-    padding: 2px;
-    width: 100%;
-    height: 100%;
+    padding: 4px;
+    width: 184px;
+    height: 48px;
+    margin: 2px;
+    overflow: hidden;
 }
 </style>

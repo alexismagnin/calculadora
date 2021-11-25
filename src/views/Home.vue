@@ -1,20 +1,17 @@
 <template>
   <div class="home">
-    <Pantalla />
-    <Teclado />
+    <Calculadora />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Teclado from '@/components/Teclado.vue'
-import Pantalla from '@/components/Pantalla.vue'
+import Calculadora from '../components/Calculadora.vue'
 
 export default {
   name: 'Home',
   components: {
-    Teclado,
-    Pantalla
+    Calculadora
   }
 }
 </script>

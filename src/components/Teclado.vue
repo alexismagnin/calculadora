@@ -10,11 +10,11 @@ export default {
             }
     },
 
-    emits: {
-        calcular,
-        numeroApretado,
-        operadorApretado
-    },
+    emits: [
+        'calcular',
+        'numero-apretado',
+        'operador-apretado'
+    ],
 
     components: {
         Boton
@@ -39,7 +39,7 @@ export default {
                     this.operando2 += numero
                 }
             }
-            this.$emit('numeroApretado',numero)
+            this.$emit('numero-apretado',numero)
         },
 
         operadorApretado(operador){
@@ -47,7 +47,7 @@ export default {
                 this.calcular()
             } else {
                 this.operador = operador
-                this.$emit('operadorApretado',operador)
+                this.$emit('operador-apretado',operador)
             }
 
         }
