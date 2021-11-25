@@ -74,6 +74,7 @@ export default {
     text-align: center;
     cursor: pointer;
     transition-duration: 0.2s;
+    box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2)
 }
 .botones:hover {
     background-color: steelblue;
