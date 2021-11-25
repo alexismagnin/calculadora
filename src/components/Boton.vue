@@ -67,7 +67,7 @@ export default {
     font-weight: bold;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin: 2px;
-    background-color: white;
+    background-color: lightgray;
     border: 2px solid steelblue;
     border-radius: 8px;
     color: steelblue;

@@ -10,33 +10,19 @@ export default {
             }
     },
 
+    emits: {
+        calcular,
+        numeroApretado,
+        operadorApretado
+    },
+
     components: {
         Boton
         },
 
     methods:{
         calcular(){
-            let resultado
-            this.operando1 = parseInt(this.operando1)
-            this.operando2 = parseInt(this.operando2)
-            switch (this.operador) {
-                case '+':
-                    resultado = this.operando1 + this.operando2 
-                    break;
-                
-                case '-':
-                    resultado = this.operando1 - this.operando2
-                    break;
-                
-                case '/':
-                    resultado = this.operando1 / this.operando2 
-                    break;
-                
-                case '*':
-                    resultado = this.operando1 * this.operando2
-                    break;
-            }
-            return resultado
+            this.$emit('calcular')
         },
 
         numeroApretado(numero){
@@ -53,14 +39,17 @@ export default {
                     this.operando2 += numero
                 }
             }
+            this.$emit('numeroApretado',numero)
         },
 
         operadorApretado(operador){
             if (operador == '='){
-                console.log(this.calcular())
+                this.calcular()
             } else {
                 this.operador = operador
+                this.$emit('operadorApretado',operador)
             }
+
         }
     }
 
