@@ -8,7 +8,10 @@ export default {
             resultado: 0,
             operando1: null,
             operando2: null,
-            operador: null
+            operador: null,
+            acumulado: '',
+            digitos: '0',
+            ultimoApretado: null
         }
     },
     
@@ -19,8 +22,28 @@ export default {
 
     methods: {
         calcular(){
+            if (this.operando2 == null) {
+                this.operando2 = this.operando1
+            }
+            if (this.ultimoApretado == '=') {
+                this.operando1 = this.resultado
+                this.textoHistorial = this.operando1 + this.operador + this.operando2 + '='    
+            } else {
+                this.textoHistorial += this.operando2 + '='
+            }
             this.actualizarResultado()
-            this.$refs.pantalla.agregarTexto('='+this.operando1)
+            this.textoDigitos = this.resultado
+            this.ultimoApretado = '='
+        },
+ 
+        resetear(){
+            this.$refs.pantalla.resetPantalla()
+            this.operando1 = null
+            this.operando2 = null
+            this.resultado = 0
+            this.operador = null
+            this.acumulado = ''
+            this.ultimoApretado = null
         },
 
         actualizarResultado(){
@@ -39,37 +62,73 @@ export default {
                     this.resultado = this.operando1 / this.operando2
                     break;
                 
-                case '*':
+                case 'x':
                     this.resultado = this.operando1 * this.operando2
                     break;
             }
-            this.operando2 = this.operando1
-            this.operando1 = this.resultado
         },
 
         numeroApretado(numero){
-            this.$refs.pantalla.agregarTexto(numero)
+            if (this.ultimoApretado == '=') {
+                this.resetear()
+            }
             if (this.operador == null){
                 if (this.operando1 == null || this.operando1 == '0') {
                     this.operando1 = numero
                 } else {
                     this.operando1 += numero
                     }
+                this.textoDigitos = this.operando1
             } else {
                 if (this.operando2 == null || this.operando2 == '0'){
                     this.operando2 = numero
                 } else {
                     this.operando2 += numero
                 }
+                this.textoDigitos = this.operando2
             }
+            this.ultimoApretado = numero
         },
 
         operadorApretado(operador){
-            this.$refs.pantalla.agregarTexto(operador)
-            if (this.operando2 != null){
+            if (this.ultimoApretado != '=') {
+                if (this.operando2 != null){
                 this.actualizarResultado()
+                }
+                this.ultimoApretado = operador
+                this.operador = operador
+                this.textoHistorial +=  this.operando1 + this.operador
+            } else {
+                this.textoHistorial = ''
+                this.operando1 = this.resultado
+                this.operando2 = null
+                this.ultimoApretado = operador
+                this.operadorApretado(operador)
             }
-            this.operador = operador
+        }
+    },
+
+    computed: {
+        textoDigitos: {
+            set(texto){
+                this.digitos = texto
+                this.$refs.pantalla.textoDigitos = this.digitos
+            },
+
+            get(){
+                return this.digitos
+            }
+        },
+
+        textoHistorial: {
+            set(texto) {
+                this.acumulado = texto
+                this.$refs.pantalla.textoAcumulado = this.acumulado
+            },
+
+            get(){
+                return this.acumulado
+            }
         }
     }
 }
@@ -80,6 +139,7 @@ export default {
         <Pantalla ref="pantalla"/>
         <Teclado 
             @calcular="calcular"
+            @resetear="resetear"
             @numero-apretado="numeroApretado"
             @operador-apretado="operadorApretado" />
     </div>

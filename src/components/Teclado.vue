@@ -4,14 +4,13 @@ import Boton from "./Boton.vue"
 export default {
     data() {
         return {
-            operando1: null,
-            operando2: null,
-            operador: null
+
             }
     },
 
     emits: [
         'calcular',
+        'resetear',
         'numero-apretado',
         'operador-apretado'
     ],
@@ -25,31 +24,16 @@ export default {
             this.$emit('calcular')
         },
 
+        resetear(){
+            this.$emit('resetear')
+        },
+
         numeroApretado(numero){
-            if (this.operador == null){
-                if (this.operando1 == null) {
-                    this.operando1 = numero
-                } else {
-                    this.operando1 += numero
-                    }
-            } else {
-                if (this.operando2 == null){
-                    this.operando2 = numero
-                } else {
-                    this.operando2 += numero
-                }
-            }
             this.$emit('numero-apretado',numero)
         },
 
         operadorApretado(operador){
-            if (operador == '='){
-                this.calcular()
-            } else {
-                this.operador = operador
-                this.$emit('operador-apretado',operador)
-            }
-
+            this.$emit('operador-apretado',operador)
         }
     }
 
@@ -61,18 +45,19 @@ export default {
         <Boton value=1 @click="numeroApretado" />
         <Boton value=2 @click="numeroApretado" />
         <Boton value=3 @click="numeroApretado" />
-        <Boton value='+' @click="operadorApretado" :disabled="this.operando1 == null" />
+        <Boton value='+' @click="operadorApretado" />
         <Boton value=4 @click="numeroApretado" />
         <Boton value=5 @click="numeroApretado" />
         <Boton value=6 @click="numeroApretado" />
-        <Boton value='-' @click="operadorApretado" :disabled="this.operando1 == null"/>
+        <Boton value='-' @click="operadorApretado" />
         <Boton value=7 @click="numeroApretado" />
         <Boton value=8 @click="numeroApretado" />
         <Boton value=9 @click="numeroApretado" />
-        <Boton value='*' @click="operadorApretado" :disabled="this.operando1 == null"/>
+        <Boton value='x' @click="operadorApretado" />
         <Boton value=0 @click="numeroApretado" />
-        <Boton value='=' spanX=2 @click="operadorApretado" :disabled="this.operando2 == null"/>
-        <Boton value='/' @click="operadorApretado" :disabled="this.operando1 == null"/>
+        <Boton value='C' spanX=1 @click="resetear" />
+        <Boton value='=' spanX=1 @click="calcular" />
+        <Boton value='/' @click="operadorApretado" />
     </div>
 </template>
 
